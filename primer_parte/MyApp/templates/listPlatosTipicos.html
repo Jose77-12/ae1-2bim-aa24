@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Platos Típicos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <h1>Lista de Platos Típicos</h1>
+
+    <button onclick="window.location.href='/addPlatoTipico'">Añadir Plato</button>
+    <script>
+        function editPlato(id) {
+            window.location.href = `/editPlatoTipico/${id}/`;
+        }
+
+        function deletePlato(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este plato?')) {
+                window.location.href = `/deletePlatoTipico/${id}/`;
+            }
+        }
+    </script>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Región</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plato in platos %}
+            <tr>
+                <td>{{ plato.nombre }}</td>
+                <td>{{ plato.descripcion }}</td>
+                <td>{{ plato.region }}</td>
+                <td>${{ plato.precio }}</td>
+                <td>
+                    <button onclick="editPlato('{{ plato.id }}')">Editar</button>
+                    <button onclick="deletePlato('{{ plato.id }}')">Eliminar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if mensaje %}
+    <div class="alert">
+        {{ mensaje }}
+    </div>
+    {% endif %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
