@@ -30,7 +30,6 @@ class MainView:
         self.delete_button.pack(side=tk.LEFT)
 
     def add_plato(self):
-        # Lógica para agregar un plato
         def submit():
             nombre = nombre_entry.get()
             descripcion = descripcion_entry.get()

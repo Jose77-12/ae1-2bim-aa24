@@ -2,8 +2,9 @@ import tkinter as tk
 from models.plato_model import PlatoTipico
 from views.main_view import MainView
 
+
 class MainController:
-    def __init__(self, model, view):
+    def __init__(self, model: PlatoTipico, view: MainView):
         self.model = model
         self.view = view
         self.view.add_plato = self.add_plato
@@ -19,7 +20,8 @@ class MainController:
         self.load_dishes()
 
     def edit_dish(self, dish_id, nombre, descripcion, ingredientes, precio, region):
-        self.model.edit_dish(dish_id, nombre, descripcion, ingredientes, precio, region)
+        self.model.edit_dish(dish_id, nombre, descripcion,
+                             ingredientes, precio, region)
         self.load_dishes()
 
     def delete_dish(self, dish_id):
@@ -30,14 +32,10 @@ class MainController:
         self.view.root.mainloop()
 
     def add_plato(self):
-        # Ejemplo de agregar un plato
-        nuevo_plato = PlatoTipico("Ceviche", "Plato de mariscos", "Costa", 10.00)
-        self.view.insert_plato(nuevo_plato)
+        self.view.add_plato()
 
     def edit_plato(self):
-        # Lógica para editar un plato
-        pass
+        self.view.edit_plato()
 
     def delete_plato(self):
-        # Lógica para eliminar un plato
-        pass
+        self.view.delete_plato()
