@@ -6,7 +6,6 @@ class MainController:
     def __init__(self, model, view):
         self.model = model
         self.view = view
-        # self.view.set_controller(self)
         self.view.add_plato = self.add_plato
         self.view.edit_plato = self.edit_plato
         self.view.delete_plato = self.delete_plato

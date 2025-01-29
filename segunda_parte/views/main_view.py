@@ -9,9 +9,10 @@ class MainView:
         self.root.title("Platos Típicos de Ecuador")
 
         self.tree = ttk.Treeview(root, columns=(
-            "Nombre", "Descripción", "Región", "Precio"), show='headings')
+            "Nombre", "Descripción", "Ingredientes", "Región", "Precio"), show='headings')
         self.tree.heading("Nombre", text="Nombre")
         self.tree.heading("Descripción", text="Descripción")
+        self.tree.heading("Ingredientes", text="Ingredientes")
         self.tree.heading("Región", text="Región")
         self.tree.heading("Precio", text="Precio")
         self.tree.pack(fill=tk.BOTH, expand=True)
@@ -33,9 +34,11 @@ class MainView:
         def submit():
             nombre = nombre_entry.get()
             descripcion = descripcion_entry.get()
+            ingredientes = ingredientes_entry.get()
             region = region_entry.get()
             precio = precio_entry.get()
-            self.insert_plato(PlatoTipico(nombre, descripcion, region, precio))
+            self.insert_plato(PlatoTipico(
+                nombre, descripcion, ingredientes, region, precio))
             add_window.destroy()
 
         add_window = tk.Toplevel(self.root)
@@ -49,16 +52,20 @@ class MainView:
         descripcion_entry = tk.Entry(add_window)
         descripcion_entry.grid(row=1, column=1)
 
-        tk.Label(add_window, text="Región").grid(row=2, column=0)
-        region_entry = tk.Entry(add_window)
-        region_entry.grid(row=2, column=1)
+        tk.Label(add_window, text="Ingredientes").grid(row=2, column=0)
+        ingredientes_entry = tk.Entry(add_window)
+        ingredientes_entry.grid(row=2, column=1)
 
-        tk.Label(add_window, text="Precio").grid(row=3, column=0)
+        tk.Label(add_window, text="Región").grid(row=3, column=0)
+        region_entry = tk.Entry(add_window)
+        region_entry.grid(row=3, column=1)
+
+        tk.Label(add_window, text="Precio").grid(row=4, column=0)
         precio_entry = tk.Entry(add_window)
-        precio_entry.grid(row=3, column=1)
+        precio_entry.grid(row=4, column=1)
 
         submit_button = tk.Button(add_window, text="Agregar", command=submit)
-        submit_button.grid(row=4, columnspan=2)
+        submit_button.grid(row=5, columnspan=2)
 
     def edit_plato(self):
         selected_item = self.tree.selection()
@@ -68,10 +75,11 @@ class MainView:
         def submit():
             nombre = nombre_entry.get()
             descripcion = descripcion_entry.get()
+            ingredientes = ingredientes_entry.get()
             region = region_entry.get()
             precio = precio_entry.get()
             self.tree.item(selected_item, values=(
-                nombre, descripcion, region, precio))
+                nombre, descripcion, ingredientes, region, precio))
             edit_window.destroy()
 
         item_values = self.tree.item(selected_item, "values")
@@ -89,18 +97,23 @@ class MainView:
         descripcion_entry.grid(row=1, column=1)
         descripcion_entry.insert(0, item_values[1])
 
-        tk.Label(edit_window, text="Región").grid(row=2, column=0)
-        region_entry = tk.Entry(edit_window)
-        region_entry.grid(row=2, column=1)
-        region_entry.insert(0, item_values[2])
+        tk.Label(edit_window, text="Ingredientes").grid(row=2, column=0)
+        ingredientes_entry = tk.Entry(edit_window)
+        ingredientes_entry.grid(row=2, column=1)
+        ingredientes_entry.insert(0, item_values[2])
 
-        tk.Label(edit_window, text="Precio").grid(row=3, column=0)
+        tk.Label(edit_window, text="Región").grid(row=3, column=0)
+        region_entry = tk.Entry(edit_window)
+        region_entry.grid(row=3, column=1)
+        region_entry.insert(0, item_values[3])
+
+        tk.Label(edit_window, text="Precio").grid(row=4, column=0)
         precio_entry = tk.Entry(edit_window)
-        precio_entry.grid(row=3, column=1)
-        precio_entry.insert(0, item_values[3])
+        precio_entry.grid(row=4, column=1)
+        precio_entry.insert(0, item_values[4])
 
         submit_button = tk.Button(edit_window, text="Guardar", command=submit)
-        submit_button.grid(row=4, columnspan=2)
+        submit_button.grid(row=5, columnspan=2)
 
     def delete_plato(self):
         selected_item = self.tree.selection()
@@ -109,4 +122,4 @@ class MainView:
 
     def insert_plato(self, plato: PlatoTipico):
         self.tree.insert("", "end", values=(
-            plato.nombre, plato.descripcion, plato.region, plato.precio))
+            plato.nombre, plato.descripcion, plato.ingredientes, plato.region, plato.precio))

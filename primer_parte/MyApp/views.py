@@ -61,6 +61,5 @@ def editPlatoTipico(request: HttpRequest, id: int):
 
     if request.method == 'GET':
         plato = PlatosTipicosDeEcuador.objects.get(id=id)
-        plato = PlatosTipicosDeEcuador.objects.get(id=id)
         context = {'plato': plato, 'id': id}
         return render(request, 'editPlatoTipico.html', context)
